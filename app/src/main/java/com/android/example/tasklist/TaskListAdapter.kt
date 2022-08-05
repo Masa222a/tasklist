@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TaskListAdapter(private var taskList: ArrayList<Task>)
     : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
-    private lateinit var listener: OnTaskCellClickListener
+    private lateinit var listener: OnItemClickListener
 
-    interface OnTaskCellClickListener {
-        fun onItemClick(task: Task)
+    interface OnItemClickListener{
+        fun onItemClickListener(view: View, position: Int, clickedText: Task)
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var label: TextView = itemView.findViewById(R.id.task_Label)
         var date: TextView = itemView.findViewById(R.id.date)
+        var favorite: ImageButton = itemView.findViewById(R.id.add_Favorite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,13 +32,17 @@ class TaskListAdapter(private var taskList: ArrayList<Task>)
 
         holder.label.text = task.label
         holder.date.text = task.date
+
+        holder.favorite.setOnClickListener {
+            listener.onItemClickListener(it, position, task)
+        }
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.listener = listener
     }
 
     override fun getItemCount(): Int = taskList.size
-
-    fun setOnTaskCellClickListener(listener: OnTaskCellClickListener) {
-        this.listener = listener
-    }
 
     fun updateTaskList(taskList: ArrayList<Task>) {
         this.taskList = taskList
