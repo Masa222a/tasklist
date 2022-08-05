@@ -13,6 +13,7 @@ import com.google.gson.Gson
 
 class AddTaskFragment : Fragment() {
     lateinit var binding: FragmentAddTaskBinding
+    var taskList = arrayListOf<Task>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +27,6 @@ class AddTaskFragment : Fragment() {
             } else if (binding.editDate.text.isEmpty()){
                 Toast.makeText(activity, "日時を入力してください", Toast.LENGTH_SHORT).show()
             } else {
-                val taskList = arrayListOf<Task>()
                 taskList.add(Task(binding.editTitle.text.toString(), binding.editDate.text.toString(), frag = false))
                 val pref = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
                 val shardPrefEditor = pref.edit()
