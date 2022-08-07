@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class TaskListFragment : Fragment() {
-    private var taskList: ArrayList<Task> = arrayListOf()
+    private var taskList: MutableList<Task> = mutableListOf()
     lateinit var adapter: TaskListAdapter
     lateinit var binding: FragmentTaskListBinding
     private var num = 0
@@ -46,6 +46,15 @@ class TaskListFragment : Fragment() {
         adapter = TaskListAdapter(taskList)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+
+        binding.fab.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                val fragment = AddTaskFragment()
+                replace(R.id.container, fragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         adapter.setOnItemClickListener(object:TaskListAdapter.OnItemClickListener{
             override fun onItemClickListener(view: View, position: Int, clickedText: Task) {
@@ -81,17 +90,19 @@ class TaskListFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    fun getTaskList() {
+    private fun getTaskList() {
         val pref = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
         val gson = Gson()
         val json = pref.getString("taskList", null)
-        val listType = object : TypeToken<ArrayList<Task>>() {}.type
-        val taskList = gson.fromJson<ArrayList<Task>>(json, listType)
-        for (task in taskList) {
-            if (this.taskList.contains(task)) {
-                Log.d("task", "taskが含まれています。")
-            } else {
-                this.taskList += task
+        if (json != null) {
+            val listType = object : TypeToken<MutableList<Task>>() {}.type
+            val taskList = gson.fromJson<MutableList<Task>>(json, listType)
+            for (task in taskList) {
+                if (this.taskList.contains(task)) {
+                    Log.d("task", "taskが含まれています。")
+                } else {
+                    this.taskList += task
+                }
             }
         }
 

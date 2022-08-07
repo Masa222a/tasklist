@@ -25,14 +25,6 @@ class MainFragment : Fragment() {
             return@setOnItemSelectedListener true
         }
 
-        binding.fab.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.container, AddTaskFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
-
         return binding.root
     }
 

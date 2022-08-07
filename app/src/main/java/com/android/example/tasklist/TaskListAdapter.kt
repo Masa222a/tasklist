@@ -1,5 +1,6 @@
 package com.android.example.tasklist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TaskListAdapter(private var taskList: ArrayList<Task>)
+class TaskListAdapter(private var taskList: MutableList<Task>)
     : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
     private lateinit var listener: OnItemClickListener
 
@@ -44,7 +45,8 @@ class TaskListAdapter(private var taskList: ArrayList<Task>)
 
     override fun getItemCount(): Int = taskList.size
 
-    fun updateTaskList(taskList: ArrayList<Task>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateTaskList(taskList: MutableList<Task>) {
         this.taskList = taskList
         notifyDataSetChanged()
     }
