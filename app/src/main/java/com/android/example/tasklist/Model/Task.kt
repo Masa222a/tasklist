@@ -1,4 +1,4 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.Model
 
 data class Task (
     var label: String,

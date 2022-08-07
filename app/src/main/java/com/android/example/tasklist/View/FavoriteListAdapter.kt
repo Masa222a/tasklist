@@ -1,4 +1,4 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.View
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.example.tasklist.Model.Task
+import com.android.example.tasklist.R
 
-class TaskListAdapter(private var taskList: MutableList<Task>)
-    : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
-    private lateinit var listener: OnItemClickListener
-
-    interface OnItemClickListener{
-        fun onItemClickListener(view: View, position: Int, clickedText: Task)
-    }
+class FavoriteListAdapter(private var taskList: MutableList<Task>)
+    : RecyclerView.Adapter<FavoriteListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var label: TextView = itemView.findViewById(R.id.task_Label)
@@ -24,7 +21,7 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.cell_task_list, parent, false)
+        val view = inflater.inflate(R.layout.cell_favorite_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,13 +31,6 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
         holder.label.text = task.label
         holder.date.text = task.date
 
-        holder.favorite.setOnClickListener {
-            listener.onItemClickListener(it, position, task)
-        }
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        this.listener = listener
     }
 
     override fun getItemCount(): Int = taskList.size

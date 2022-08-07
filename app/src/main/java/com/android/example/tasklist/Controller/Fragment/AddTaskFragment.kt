@@ -1,4 +1,4 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.Controller.Fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.android.example.tasklist.Model.Task
 import com.android.example.tasklist.databinding.FragmentAddTaskBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

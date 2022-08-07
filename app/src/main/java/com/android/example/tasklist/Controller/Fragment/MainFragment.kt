@@ -1,10 +1,12 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.Controller.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.example.tasklist.View.BottomNavigationPagerAdapter
+import com.android.example.tasklist.R
 import com.android.example.tasklist.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {

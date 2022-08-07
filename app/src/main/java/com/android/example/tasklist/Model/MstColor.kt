@@ -1,4 +1,4 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.Model
 
 data class MstColor(
     val color_code: String,

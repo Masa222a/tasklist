@@ -1,7 +1,10 @@
-package com.android.example.tasklist
+package com.android.example.tasklist.View
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.android.example.tasklist.Controller.Fragment.MainFragment
+import com.android.example.tasklist.Controller.Fragment.TaskListFragment
+import com.android.example.tasklist.Controller.Fragment.FavoriteListFragment
 
 class BottomNavigationPagerAdapter(fm: MainFragment) : FragmentStateAdapter(fm) {
     override fun getItemCount(): Int {
