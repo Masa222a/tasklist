@@ -13,9 +13,12 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.example.tasklist.Controller.Fragment.FavoriteListFragment.Companion.REQ_KEY
+import com.android.example.tasklist.Controller.Fragment.FavoriteListFragment.Companion.createArgments
 import com.android.example.tasklist.Model.MstColor
 import com.android.example.tasklist.R
 import com.android.example.tasklist.Model.Task
@@ -73,6 +76,12 @@ class TaskListFragment : Fragment() {
                     //お気に入り追加
                     num += 1
                     Log.d("+1$num","$num")
+                    val favoriteList = mutableListOf<Task>()
+                    favoriteList.add(clickedText)
+                    setFragmentResult(
+                        REQ_KEY,
+                        createArgments(favoriteList)
+                    )
                 }
 
                 button.setColorFilter(Color.rgb(color.r_code, color.g_code, color.b_code), PorterDuff.Mode.SRC_ATOP)

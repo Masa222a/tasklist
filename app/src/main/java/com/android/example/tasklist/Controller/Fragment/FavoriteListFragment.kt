@@ -5,15 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.example.tasklist.Model.Task
+import com.android.example.tasklist.View.FavoriteListAdapter
 import com.android.example.tasklist.View.TaskListAdapter
 import com.android.example.tasklist.databinding.FragmentFavoriteListBinding
 
 class FavoriteListFragment : Fragment() {
     lateinit var binding: FragmentFavoriteListBinding
-    private var taskList: ArrayList<Task> = arrayListOf()
-    lateinit var adapter: TaskListAdapter
+    private var taskList: MutableList<Task> = mutableListOf()
+    lateinit var adapter: FavoriteListAdapter
+
+    companion object {
+        const val REQ_KEY: String = "task"
+        private const val ARG_SHOP: String = "task"
+
+        fun createArgments(favoriteList: MutableList<Task>): Bundle {
+            return bundleOf(ARG_SHOP to favoriteList)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +34,20 @@ class FavoriteListFragment : Fragment() {
         binding = FragmentFavoriteListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         val recyclerView = binding.recyclerView
-        adapter = TaskListAdapter(taskList)
+        adapter = FavoriteListAdapter(taskList)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
+        setFragmentResultListener(REQ_KEY) { _, bundle ->
+            val favoriteList = bundle.getSerializable(ARG_SHOP) as MutableList<Task>
+            changeFavoriteList(favoriteList)
+        }
+
         return view
+    }
+
+    private fun changeFavoriteList(favoriteList: MutableList<Task>) {
+        adapter.updateTaskList(favoriteList)
     }
 
     override fun onResume() {
