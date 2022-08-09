@@ -37,7 +37,8 @@ class FavoriteListAdapter(private var taskList: MutableList<Task>)
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateTaskList(taskList: MutableList<Task>) {
-        this.taskList = taskList
+        val trueList = taskList.filter { !it.frag }
+        this.taskList = trueList as MutableList<Task>
         notifyDataSetChanged()
     }
 }

@@ -49,7 +49,8 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateTaskList(taskList: MutableList<Task>) {
-        this.taskList = taskList
+        val falseList = taskList.filter { !it.frag }
+        this.taskList = falseList as MutableList<Task>
         notifyDataSetChanged()
     }
 }
