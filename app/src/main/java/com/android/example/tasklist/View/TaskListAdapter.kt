@@ -36,6 +36,13 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
         holder.label.text = task.label
         holder.date.text = task.date
 
+//        isFavoriteによってimageの色を変更
+        if (task.isFavorite) {
+//            holder.favorite
+        } else {
+//            holder.favorite
+        }
+
         holder.favorite.setOnClickListener {
             listener.onItemClickListener(it, position, task)
         }
@@ -49,7 +56,7 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateTaskList(taskList: MutableList<Task>) {
-        val falseList = taskList.filter { !it.frag }
+        val falseList = taskList.filter { !it.isFavorite }
         this.taskList = falseList as MutableList<Task>
         notifyDataSetChanged()
     }

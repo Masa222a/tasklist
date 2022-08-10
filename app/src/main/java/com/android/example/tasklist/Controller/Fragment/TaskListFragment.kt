@@ -1,6 +1,5 @@
 package com.android.example.tasklist.Controller.Fragment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -60,44 +59,24 @@ class TaskListFragment : Fragment() {
 
         adapter.setOnItemClickListener(object: TaskListAdapter.OnItemClickListener {
             override fun onItemClickListener(view: View, position: Int, clickedText: Task) {
-                val button = view.findViewById<ImageButton>(R.id.add_Favorite)
+                taskList[position].isFavorite = !taskList[position].isFavorite
 
-                val color = mstColorList[num]
-                if (num + 1 == mstColorList.size) {
-                    //お気に入り削除
-                    num = 0
-                    Log.d("0$num","$num")
-                    clickedText.frag = false
+                val shardPrefEditor = pref.edit()
+                shardPrefEditor.putString("taskList", Gson().toJson(taskList))
+                shardPrefEditor.apply()
 
-                } else {
-                    //お気に入り追加
-                    num += 1
-                    Log.d("+1$num","$num")
-                    clickedText.frag = true
-//                    val favoriteList = mutableListOf<Task>()
-//                    favoriteList.add(clickedText)
-//                    setFragmentResult(
-//                        REQ_KEY,
-//                        createArgments(favoriteList)
-//                    )
-                }
-
-                button.setColorFilter(Color.rgb(color.r_code, color.g_code, color.b_code), PorterDuff.Mode.SRC_ATOP)
-                Toast.makeText(requireActivity(), "${clickedText}がタップされました", Toast.LENGTH_LONG).show()
-
+                adapter.updateTaskList(taskList)
             }
         })
 
         return view
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         activity?.title = "タスク一覧"
         getTaskList()
         adapter.updateTaskList(taskList)
-        adapter.notifyDataSetChanged()
     }
 
     fun getTaskList() {
@@ -107,13 +86,7 @@ class TaskListFragment : Fragment() {
         if (json != null) {
             val listType = object : TypeToken<MutableList<Task>>() {}.type
             val taskList = gson.fromJson<MutableList<Task>>(json, listType)
-            for (task in taskList) {
-                if (this.taskList.contains(task)) {
-                    Log.d("task", "taskが含まれています。")
-                } else {
-                    this.taskList += task
-                }
-            }
+            this.taskList = taskList
         }
 
     }

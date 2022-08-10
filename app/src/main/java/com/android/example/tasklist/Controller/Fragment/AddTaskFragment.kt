@@ -2,7 +2,6 @@ package com.android.example.tasklist.Controller.Fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,24 +27,28 @@ class AddTaskFragment : Fragment() {
             } else if (binding.editDate.text.isEmpty()){
                 Toast.makeText(activity, "日時を入力してください", Toast.LENGTH_SHORT).show()
             } else {
+
+                val newTask = Task(
+                    binding.editTitle.text.toString(),
+                    binding.editDate.text.toString(),
+                    isFavorite = false
+                )
                 var taskList = mutableListOf<Task>()
                 val pref = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
-                val shardPrefEditor = pref.edit()
-                val gson = Gson()
                 val json = pref.getString("taskList", null)
-                val listType = object : TypeToken<MutableList<Task>>() {}.type
+                val gson = Gson()
+
                 if (json != null) {
+                    val listType = object : TypeToken<MutableList<Task>>() {}.type
                     val currentTaskList = gson.fromJson<MutableList<Task>>(json, listType)
-                    Log.d("GsonCurrent", "${currentTaskList}")
                     taskList = currentTaskList
-                    val task = Task(binding.editTitle.text.toString(), binding.editDate.text.toString(), frag = false)
-                    if (!taskList.contains(task)) {
-                        taskList.add(Task(binding.editTitle.text.toString(), binding.editDate.text.toString(), frag = false))
-                        Log.d("GsonTaskList", "${taskList}")
-                        shardPrefEditor.putString("taskList", gson.toJson(taskList))
-                        shardPrefEditor.apply()
-                        Log.d("Gson", gson.toJson(taskList))
-                    }
+                }
+
+                if (!taskList.contains(newTask)) {
+                    taskList.add(newTask)
+                    val shardPrefEditor = pref.edit()
+                    shardPrefEditor.putString("taskList", gson.toJson(taskList))
+                    shardPrefEditor.apply()
                 }
                 binding.editTitle.text.clear()
                 binding.editDate.text.clear()
