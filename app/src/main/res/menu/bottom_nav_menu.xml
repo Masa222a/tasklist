@@ -7,6 +7,6 @@
 
     <item
         android:id="@+id/favolite_List"
-        android:icon="@drawable/ic_baseline_favorite_50"
+        android:icon="@drawable/ic_baseline_favorite_50_gray"
         android:title="お気に入り" />
 </menu>
