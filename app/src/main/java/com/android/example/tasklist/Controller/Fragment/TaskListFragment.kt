@@ -1,22 +1,15 @@
 package com.android.example.tasklist.Controller.Fragment
 
-import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.example.tasklist.Model.MstColor
 import com.android.example.tasklist.Model.Task
 import com.android.example.tasklist.R
+import com.android.example.tasklist.SharedPreferencesManager
 import com.android.example.tasklist.View.TaskListAdapter
 import com.android.example.tasklist.databinding.FragmentTaskListBinding
 import com.google.gson.Gson
@@ -26,11 +19,6 @@ class TaskListFragment : Fragment() {
     private var taskList: MutableList<Task> = mutableListOf()
     lateinit var adapter: TaskListAdapter
     lateinit var binding: FragmentTaskListBinding
-    private var num = 0
-    private val mstColorList: List<MstColor> = listOf(
-        MstColor("3", "red", 231, 87, 53),
-        MstColor("4", "gray", 170, 170, 170),
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,10 +26,6 @@ class TaskListFragment : Fragment() {
     ): View? {
         binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
         val view = binding.root
-        val pref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
-        pref.edit{
-            clear()
-        }
 
         val recyclerView = binding.recyclerView
         adapter = TaskListAdapter(taskList)
@@ -60,10 +44,9 @@ class TaskListFragment : Fragment() {
         adapter.setOnItemClickListener(object: TaskListAdapter.OnItemClickListener {
             override fun onItemClickListener(view: View, position: Int, clickedText: Task) {
                 taskList[position].isFavorite = !taskList[position].isFavorite
+                SharedPreferencesManager.instance.saveTaskList(requireActivity(), "pref", taskList)
 
-                val shardPrefEditor = pref.edit()
-                shardPrefEditor.putString("taskList", Gson().toJson(taskList))
-                shardPrefEditor.apply()
+                Toast.makeText(requireActivity(), "${clickedText}", Toast.LENGTH_SHORT).show()
 
                 adapter.updateTaskList(taskList)
             }
@@ -80,9 +63,8 @@ class TaskListFragment : Fragment() {
     }
 
     fun getTaskList() {
-        val pref = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val json = SharedPreferencesManager.instance.getCurrentTaskList(requireActivity(), "pref")
         val gson = Gson()
-        val json = pref.getString("taskList", null)
         if (json != null) {
             val listType = object : TypeToken<MutableList<Task>>() {}.type
             val taskList = gson.fromJson<MutableList<Task>>(json, listType)
@@ -90,5 +72,6 @@ class TaskListFragment : Fragment() {
         }
 
     }
+
 
 }

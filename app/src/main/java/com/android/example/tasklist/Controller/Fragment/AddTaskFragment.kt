@@ -1,13 +1,13 @@
 package com.android.example.tasklist.Controller.Fragment
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.android.example.tasklist.Model.Task
+import com.android.example.tasklist.SharedPreferencesManager
 import com.android.example.tasklist.databinding.FragmentAddTaskBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -34,8 +34,8 @@ class AddTaskFragment : Fragment() {
                     isFavorite = false
                 )
                 var taskList = mutableListOf<Task>()
-                val pref = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
-                val json = pref.getString("taskList", null)
+
+                val json = SharedPreferencesManager.instance.getCurrentTaskList(requireActivity(), "pref")
                 val gson = Gson()
 
                 if (json != null) {
@@ -46,9 +46,7 @@ class AddTaskFragment : Fragment() {
 
                 if (!taskList.contains(newTask)) {
                     taskList.add(newTask)
-                    val shardPrefEditor = pref.edit()
-                    shardPrefEditor.putString("taskList", gson.toJson(taskList))
-                    shardPrefEditor.apply()
+                    SharedPreferencesManager.instance.saveTaskList(requireActivity(), "pref", taskList)
                 }
                 binding.editTitle.text.clear()
                 binding.editDate.text.clear()
