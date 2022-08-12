@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:background="@color/white"
-        android:src="@drawable/ic_baseline_favorite_50"
+        android:src="@drawable/ic_baseline_favorite_50_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

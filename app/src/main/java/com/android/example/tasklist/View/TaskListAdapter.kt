@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.example.tasklist.R
 import com.android.example.tasklist.Model.Task
+import com.android.example.tasklist.R
 
 class TaskListAdapter(private var taskList: MutableList<Task>)
     : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
@@ -21,7 +21,7 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var label: TextView = itemView.findViewById(R.id.task_Label)
         var date: TextView = itemView.findViewById(R.id.date)
-        var favorite: ImageButton = itemView.findViewById(R.id.add_Favorite)
+        var favorite: ImageView = itemView.findViewById(R.id.add_Favorite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,9 +38,9 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
 
 //        isFavoriteによってimageの色を変更
         if (task.isFavorite) {
-//            holder.favorite
+            holder.favorite.setImageResource(R.drawable.ic_baseline_favorite_50_red)
         } else {
-//            holder.favorite
+            holder.favorite.setImageResource(R.drawable.ic_baseline_favorite_50_gray)
         }
 
         holder.favorite.setOnClickListener {
@@ -56,8 +56,7 @@ class TaskListAdapter(private var taskList: MutableList<Task>)
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateTaskList(taskList: MutableList<Task>) {
-        val falseList = taskList.filter { !it.isFavorite }
-        this.taskList = falseList as MutableList<Task>
+        this.taskList = taskList
         notifyDataSetChanged()
     }
 }

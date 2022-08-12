@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.example.tasklist.Model.Task
@@ -16,7 +16,7 @@ class FavoriteListAdapter(private var taskList: MutableList<Task>)
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var label: TextView = itemView.findViewById(R.id.task_Label)
         var date: TextView = itemView.findViewById(R.id.date)
-        var favorite: ImageButton = itemView.findViewById(R.id.add_Favorite)
+        var favorite: ImageView = itemView.findViewById(R.id.add_Favorite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
