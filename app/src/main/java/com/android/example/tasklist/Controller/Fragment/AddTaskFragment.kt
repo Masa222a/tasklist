@@ -1,5 +1,6 @@
 package com.android.example.tasklist.Controller.Fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,11 @@ import com.google.gson.reflect.TypeToken
 
 class AddTaskFragment : Fragment() {
     lateinit var binding: FragmentAddTaskBinding
+    var listener: AddTaskListener? = null
+
+    interface AddTaskListener {
+        fun finishAddTask()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +61,18 @@ class AddTaskFragment : Fragment() {
 
         binding.backButton.setOnClickListener {
             parentFragmentManager.popBackStack()
+            listener?.finishAddTask()
         }
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? AddTaskListener
+        if (listener == null) {
+            throw ClassCastException("$context must implement OnboardSignUpTermsOfServiceListener")
+        }
     }
 
 }

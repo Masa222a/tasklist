@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.example.tasklist.Model.Task
 import com.android.example.tasklist.View.BottomNavigationPagerAdapter
 import com.android.example.tasklist.R
+import com.android.example.tasklist.View.TaskListAdapter
 import com.android.example.tasklist.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {

@@ -15,7 +15,7 @@ import com.android.example.tasklist.databinding.FragmentTaskListBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class TaskListFragment : Fragment() {
+class TaskListFragment : Fragment(), AddTaskFragment.AddTaskListener{
     private var taskList: MutableList<Task> = mutableListOf()
     lateinit var adapter: TaskListAdapter
     lateinit var binding: FragmentTaskListBinding
@@ -35,6 +35,7 @@ class TaskListFragment : Fragment() {
         binding.fab.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 val fragment = AddTaskFragment()
+                fragment.listener?.finishAddTask()
                 replace(R.id.container, fragment)
                 addToBackStack(null)
                 commit()
@@ -57,9 +58,7 @@ class TaskListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.title = "タスク一覧"
-        getTaskList()
-        adapter.updateTaskList(taskList)
+        finishAddTask()
     }
 
     fun getTaskList() {
@@ -73,5 +72,16 @@ class TaskListFragment : Fragment() {
 
     }
 
+//    fun updateTaskList() {
+//        activity?.title = "タスク一覧"
+//        getTaskList()
+//        adapter.updateTaskList(taskList)
+//    }
+
+    override fun finishAddTask() {
+        activity?.title = "タスク一覧"
+        getTaskList()
+        adapter.updateTaskList(taskList)
+    }
 
 }
