@@ -67,12 +67,8 @@ class AddTaskFragment : Fragment() {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as? AddTaskListener
-        if (listener == null) {
-            throw ClassCastException("$context must implement OnboardSignUpTermsOfServiceListener")
-        }
+    fun setOnAddTaskListener(listener: AddTaskListener) {
+        this.listener = listener
     }
 
 }

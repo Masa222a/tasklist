@@ -1,6 +1,7 @@
 package com.android.example.tasklist.Controller.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,13 @@ class TaskListFragment : Fragment(), AddTaskFragment.AddTaskListener{
         binding.fab.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 val fragment = AddTaskFragment()
-                fragment.listener?.finishAddTask()
+                fragment.setOnAddTaskListener(object : AddTaskFragment.AddTaskListener {
+                    override fun finishAddTask() {
+                        activity?.title = "タスク一覧"
+                        getTaskList()
+                        adapter.updateTaskList(taskList)
+                    }
+                })
                 replace(R.id.container, fragment)
                 addToBackStack(null)
                 commit()
@@ -71,12 +78,6 @@ class TaskListFragment : Fragment(), AddTaskFragment.AddTaskListener{
         }
 
     }
-
-//    fun updateTaskList() {
-//        activity?.title = "タスク一覧"
-//        getTaskList()
-//        adapter.updateTaskList(taskList)
-//    }
 
     override fun finishAddTask() {
         activity?.title = "タスク一覧"
