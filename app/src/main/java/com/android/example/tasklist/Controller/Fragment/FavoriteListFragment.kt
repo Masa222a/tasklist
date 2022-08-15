@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.example.tasklist.Model.Task
+import com.android.example.tasklist.SharedPreferencesManager
 import com.android.example.tasklist.View.FavoriteListAdapter
 import com.android.example.tasklist.databinding.FragmentFavoriteListBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class FavoriteListFragment : Fragment() {
     lateinit var binding: FragmentFavoriteListBinding
@@ -33,9 +36,21 @@ class FavoriteListFragment : Fragment() {
         adapter.updateTaskList(taskList)
     }
 
+    fun getCurrentTaskList() {
+        val json = SharedPreferencesManager.instance.getCurrentTaskList(requireActivity(), "pref")
+        val gson = Gson()
+        if (json != null) {
+            val listType = object : TypeToken<MutableList<Task>>() {}.type
+            val taskList = gson.fromJson<MutableList<Task>>(json, listType)
+            this.taskList = taskList
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         activity?.title = "お気に入り"
+        getCurrentTaskList()
+        changeFavoriteList(taskList)
     }
 
 }
