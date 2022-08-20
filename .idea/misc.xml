@@ -8,11 +8,12 @@
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/drawable/ic_baseline_favorite_50.xml" value="0.362962962962963" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/drawable/ic_launcher_background.xml" value="0.362962962962963" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/cell_favorite_list.xml" value="0.25" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/cell_task_list.xml" value="0.25" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/fragment_add_task.xml" value="0.1" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/fragment_favorite_list.xml" value="0.10925925925925926" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/fragment_main.xml" value="0.1940928270042194" />
-        <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/fragment_task_list.xml" value="0.10925925925925926" />
+        <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/layout/fragment_task_list.xml" value="0.21" />
         <entry key="..\:/Users/PC_User/AndroidStudioProjects/tasklist/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
