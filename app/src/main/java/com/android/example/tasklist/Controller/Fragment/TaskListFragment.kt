@@ -110,6 +110,7 @@ class TaskListFragment : Fragment(), AddTaskFragment.AddTaskListener{
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 taskList.removeAt(viewHolder.adapterPosition)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                SharedPreferencesManager.instance.saveTaskList(requireActivity(), "pref", taskList)
             }
 
             override fun onChildDraw(
